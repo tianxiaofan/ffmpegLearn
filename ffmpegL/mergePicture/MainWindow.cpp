@@ -21,6 +21,10 @@
 
 #include <QDebug>
 
+/**
+ * 测试图片合并,使用sdl渲染
+ */
+
 static SDL_Window*    sdl_screen  = nullptr;
 static SDL_Renderer*  sdl_render  = nullptr;
 static SDL_Texture*   sdl_texture = nullptr;

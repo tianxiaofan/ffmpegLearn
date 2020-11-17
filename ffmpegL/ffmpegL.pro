@@ -2,4 +2,6 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     mergePicture \
-    sdlTest
+    sdlPlayYUV \
+    sdlTest \
+    videoRenderer
