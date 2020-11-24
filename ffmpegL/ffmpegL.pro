@@ -7,5 +7,6 @@ SUBDIRS += \
     sdlTest \
     swsScaleTest \
     testAVFrame \
+    testEncode \
     videoRenderer \
     avframe2renderer

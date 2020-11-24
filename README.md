@@ -1,5 +1,9 @@
 # ffmpegLearn
 
+课程学习笔记:
+
+https://edu.51cto.com/course/24960.html
+
 ##### 环境
 
 + Qt5.15
@@ -11,9 +15,9 @@
 + clone 到本地后,使用Qt5.15直接打开 ffmpegL.pro 即可
 + 多个Qt子项目,使用mvsc2019 x86版本编译
 
-##### 子项目说明
+##### 子项目说明 由简到复杂按以下项目顺序
 
-+ Logger:日志
++ Logger:日志,后续项目大部分都有使用到
 
 + mergePicture: 合并图片,sdl渲染显示
 
@@ -42,4 +46,6 @@
     ffmpeg.exe -i .\binghe.mp4 -ss 5:00 -t 1:00 -pix_fmt rgba rgba.rgb
 
     ffmpeg.exe -i .\binghe.mp4 -ss 5:00 -t 1:00 -pix_fmt rgb24 rgba.rgb
+  
++ testEncode:测试H264和h265解码
 
