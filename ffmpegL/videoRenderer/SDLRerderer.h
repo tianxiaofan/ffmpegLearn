@@ -26,6 +26,12 @@ class SDLRerderer : public VideoRerdererView
 public:
     bool init(int width, int height, PixFormat fmt = RGBA, void* winId = nullptr) override;
     bool draw(const unsigned char* data, int linesize = 0) override;
+    bool draw(const unsigned char* y,
+              int                  y_pitch,
+              const unsigned char* u,
+              int                  u_pitch,
+              const unsigned char* v,
+              int                  v_pitch) override;
     void close() override;
     bool isExit() override;
 

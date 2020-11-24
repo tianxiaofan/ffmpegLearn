@@ -11,3 +11,35 @@
 + clone 到本地后,使用Qt5.15直接打开 ffmpegL.pro 即可
 + 多个Qt子项目,使用mvsc2019 x86版本编译
 
+##### 子项目说明
+
++ Logger:日志
+
++ mergePicture: 合并图片,sdl渲染显示
+
++ sdlPlayYUV:sdl渲染显示yuv
+
++ sdlTest:sdl测试
+
++ testAVFrame : AVFrame测试
+
++ videoRenderer : 视频渲染接口,大多数子项目会用到
+
++ avFrame2renderer:AVFrame使用videoRenderer渲染
+
+  ​	在main文件中,有进行不同sleep准确度测试,注释不同宏可切换
+
++ swsScaleTest:测试SwsScale,所有测试程序都只是在main.cpp中,测试为转换yuv到rgba并保存rgba文件,再由rgba转换到yuv...这里的rgba和yuv后面可以用来测试
+
++ YuvOrRgbRender:从本项目开始,VideoRerdererView和SDLRerderer进行重构,后续项目会用此项目文件中的VideoRerdererView和SDLRerderer,,已写好videoRenderer.pri..后续直接包含即可,lib库的头文件均已包含,dll库在编译时会自动复制到程序运行目录.
+
+  + 本项目支持播放yuv420p,ARGB,RGBA,ABGR,BGRA,RGB24,BGR24的播放
+
+  + 在播放时,应设置好界面上视频宽高,读取yuv420p或者rgb文件时,是按设置的宽度来读取的
+
+    ffmpeg转换格式的命令:
+
+    ffmpeg.exe -i .\binghe.mp4 -ss 5:00 -t 1:00 -pix_fmt rgba rgba.rgb
+
+    ffmpeg.exe -i .\binghe.mp4 -ss 5:00 -t 1:00 -pix_fmt rgb24 rgba.rgb
+

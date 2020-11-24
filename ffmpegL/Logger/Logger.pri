@@ -1,3 +1,7 @@
+
+
+!contains(DEFINES, LOGGER){
+DEFINES += LOGGER
 CONFIG += c++11
 
 HEADERS += \
@@ -8,5 +12,5 @@ SOURCES += \
     $$PWD/Logger.cpp
 
 INCLUDEPATH += $$PWD
-
+}
 

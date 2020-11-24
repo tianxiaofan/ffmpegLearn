@@ -17,10 +17,18 @@
 #pragma once
 
 #include <QMutex>
+
+/**
+ * @brief customSleep 自定义的sleep
+ * @param m
+ */
+void customSleep(unsigned int m);
+
 /**
  * @brief The VideoRerdererView class 视频渲染接口
  */
 
+struct AVFrame;
 class VideoRerdererView
 {
 public:
@@ -56,6 +64,20 @@ public:
      */
     virtual bool draw(const unsigned char* data, int linesize = 0) = 0;
 
+    virtual bool draw(const unsigned char* y,
+                      int                  y_pitch,
+                      const unsigned char* u,
+                      int                  u_pitch,
+                      const unsigned char* v,
+                      int                  v_pitch) = 0;
+
+    /**
+     * @brief drawAVFrame 渲染AVFrame
+     * @param frame AVFrame
+     * @return
+     */
+    virtual bool drawAVFrame(AVFrame* frame);
+
     /**
      * @brief close 清理所有申请的资源,关闭窗口
      */
@@ -77,12 +99,17 @@ public:
         m_scalHeight = h;
     }
 
+    int getFps() { return m_sfps; }
+
 protected:
+    int       m_sfps   = 0; //显示帧率
     int       m_width  = 0; //材质宽高
     int       m_height = 0;
     PixFormat m_fmt    = RGBA;
     QMutex    m_mutex;
-    int       m_scaleWidth = 0;//实际显示宽高
+    int       m_scaleWidth = 0; //实际显示宽高
     int       m_scalHeight = 0;
+    long long m_beginMs    = 0;//计时开始时间
+    int       m_count      = 0;//统计显示次数
 };
 

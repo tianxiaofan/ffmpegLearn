@@ -164,7 +164,7 @@ bool SDLRerderer::draw(const unsigned char* data, int linesize)
 
     SDL_Rect  rect;
     SDL_Rect* prect = nullptr;
-    if (m_scaleWidth > 0 && m_scalHeight > 0)//用户手动设置缩放
+    if (m_scaleWidth > 0 && m_scalHeight > 0) //用户手动设置缩放
     {
         rect.x = 0;
         rect.y = 0;
@@ -172,7 +172,53 @@ bool SDLRerderer::draw(const unsigned char* data, int linesize)
         rect.h = m_scalHeight;
         prect  = &rect;
     }
-    re     = SDL_RenderCopy(m_sdlRender, m_sdlTexture, nullptr, prect);
+    re = SDL_RenderCopy(m_sdlRender, m_sdlTexture, nullptr, prect);
+    if (re != 0)
+    {
+        LOG_WARN_THREAD << SDL_GetError();
+        return false;
+    }
+
+    //显示
+    SDL_RenderPresent(m_sdlRender);
+    return true;
+}
+
+
+bool SDLRerderer::draw(const unsigned char *y, int y_pitch, const unsigned char *u, int u_pitch, const unsigned char *v, int v_pitch)
+{
+    if(!y || !u || !v)
+        return false;
+    QMutexLocker lock(&m_mutex);
+    if (!m_sdlRender || !m_sdlTexture || !m_sdlWindow || m_width <= 0 || m_height <= 0)
+        return false;
+
+
+    //复制内存数据到显存
+    auto re = SDL_UpdateYUVTexture(m_sdlTexture, nullptr, y, y_pitch, u, u_pitch, v, v_pitch);
+    if (re != 0)
+    {
+        LOG_WARN_THREAD << SDL_GetError();
+        return false;
+    }
+    //清空屏幕
+    SDL_RenderClear(m_sdlRender);
+    if (m_scalHeight <= 0)
+        m_scalHeight = m_height;
+    if (m_scaleWidth <= 0)
+        m_scaleWidth = m_width;
+
+    SDL_Rect  rect;
+    SDL_Rect* prect = nullptr;
+    if (m_scaleWidth > 0 && m_scalHeight > 0) //用户手动设置缩放
+    {
+        rect.x = 0;
+        rect.y = 0;
+        rect.w = m_scaleWidth;
+        rect.h = m_scalHeight;
+        prect  = &rect;
+    }
+    re = SDL_RenderCopy(m_sdlRender, m_sdlTexture, nullptr, prect);
     if (re != 0)
     {
         LOG_WARN_THREAD << SDL_GetError();

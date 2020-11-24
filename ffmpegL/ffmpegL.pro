@@ -1,7 +1,11 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
+    YuvOrRgbRenderer \
     mergePicture \
     sdlPlayYUV \
     sdlTest \
-    videoRenderer
+    swsScaleTest \
+    testAVFrame \
+    videoRenderer \
+    avframe2renderer

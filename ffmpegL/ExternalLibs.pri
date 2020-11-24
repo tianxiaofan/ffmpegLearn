@@ -1,6 +1,8 @@
 
+!contains(DEFINES,FFMPEG){
+DEFINES += FFMPEG
 win32: LIBS += -L$$PWD/lib/x86/ -lavcodec -lavdevice -lavfilter -lavformat -lavutil -lpostproc -lSDL2 \
-                 -lSDL2test -lswresample -lswscale
+                 -lswresample -lswscale
 
 INCLUDEPATH += $$PWD/include
 DEPENDPATH += $$PWD/include
@@ -13,3 +15,8 @@ DESTDIR_WIN ~= s,/,\\,g
 QMAKE_POST_LINK += $$escape_expand(\\n) $$QMAKE_COPY \"$$DLL_PATH\"  \"$$DESTDIR_WIN\"
 message($$QMAKE_POST_LINK)
 }
+
+}
+
+
+

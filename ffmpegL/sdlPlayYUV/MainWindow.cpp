@@ -76,6 +76,7 @@ void MainWindow::timerEvent(QTimerEvent* event)
     yuvFile.read((char*) yuv, sdl_w * sdl_h * 1.5);
     //yuv面平存储
     //yyyyyyyyuuvv
+    //https://blog.csdn.net/xjhhjx/article/details/80291465
     SDL_UpdateTexture(sdl_texture, nullptr, yuv, sdl_w);//一行Y的字节数
     SDL_RenderClear(sdl_render);
     SDL_Rect rect;
