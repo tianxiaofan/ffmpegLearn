@@ -32,7 +32,8 @@ extern "C"
 //#define AV_SET_PRESET
 //#define AV_SET_BIT
 //#define AV_SET_CBR
-#define AV_SET_CRF
+//#define AV_SET_CRF
+#define TEST_NALU
 
 int main(int argc, char* argv[])
 {
@@ -171,6 +172,10 @@ int main(int argc, char* argv[])
     ctx->rc_buffer_size = rate * 2;
 #endif
 
+#ifdef TEST_NALU
+    //一组图像的帧数
+    ctx->gop_size = 6;
+#endif
     //[4]打开编码上下文
     int re = avcodec_open2(ctx, codec, nullptr);
     if (re != 0)
@@ -243,7 +248,31 @@ int main(int argc, char* argv[])
                 LOG_WARN << buff;
                 break;
             }
-            LOG_INFO << pkt->size;
+            //            LOG_INFO << pkt->size;
+
+#ifdef TEST_NALU
+            /**
+             * 分析nalu
+            * 一个AVPacket包含多个nalu以0001开头的,以0001为间隔,也有是以001开头的
+            * 第个字节为 nalu标志
+            * 1:非IDR图像中不采用数据划分的片段
+            * 5:IDR图像的片段
+            * 6:补充增强信息 sei
+            * 7:序列参数集 sps
+            * 8:图像参数集 pps
+            */
+            unsigned char nal_head      = *(pkt->data + 4); //取第四位
+            int           nal_unit_type = nal_head & 0x1f; //取后5位 0001 1111,,
+            LOG_INFO << nal_unit_type;
+            for (int i = 4; i < pkt->size - 4; i++)
+            {
+                if (pkt->data[i] == 0 && pkt->data[i + 1] == 0 && pkt->data[i + 2] == 1)
+                {
+                    nal_unit_type = *(pkt->data + i + 3) & 0x1f;
+                    LOG_INFO << "frame:" << nal_unit_type;
+                }
+            }
+#endif
             ofs.write((char*) pkt->data, pkt->size);
             av_packet_unref(pkt);
         } while (re >= 0);
