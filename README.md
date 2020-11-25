@@ -49,3 +49,5 @@ https://edu.51cto.com/course/24960.html
   
 + testEncode:测试H264和h265解码,其中包含四个宏,用来控制编码的码率,具体可看里面写的注释
 
++ encode: 封装编码器, encode线程安全,所有ffmpeg函数全部封装在其中,解决编码过程缓冲未取的问题, main文件为测试文件
+

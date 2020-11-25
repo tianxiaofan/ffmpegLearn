@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
+    encode \
     YuvOrRgbRenderer \
     mergePicture \
     sdlPlayYUV \
