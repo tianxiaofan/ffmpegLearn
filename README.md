@@ -47,5 +47,5 @@ https://edu.51cto.com/course/24960.html
 
     ffmpeg.exe -i .\binghe.mp4 -ss 5:00 -t 1:00 -pix_fmt rgb24 rgba.rgb
   
-+ testEncode:测试H264和h265解码
++ testEncode:测试H264和h265解码,其中包含四个宏,用来控制编码的码率,具体可看里面写的注释
 
