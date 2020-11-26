@@ -40,6 +40,15 @@ long long getNowMs()
     return clock() / (CLOCKS_PER_SEC / 1000);//兼容跨平台
 }
 
+VideoRerdererView::~VideoRerdererView()
+{
+    if (m_cache)
+    {
+        delete[] m_cache;
+        m_cache = nullptr;
+    }
+}
+
 VideoRerdererView* VideoRerdererView::create(VideoRerdererView::RendererType type)
 {
     switch (type)
@@ -78,6 +87,32 @@ bool VideoRerdererView::drawAVFrame(AVFrame* frame)
                     frame->linesize[1],
                     frame->data[2],
                     frame->linesize[2]);
+        break;
+    case AV_PIX_FMT_NV12:
+        if (!m_cache)
+        {
+            m_cache = new unsigned char[4096 * 2160 * 1.5];
+        }
+        if (frame->linesize[0] == frame->width)
+        {
+            memcpy(m_cache, frame->data[0], frame->linesize[0] * frame->height); //Y
+            memcpy(m_cache + frame->linesize[0] * frame->height,
+                   frame->data[1],
+                   frame->linesize[1] * frame->height / 2); //UV
+        }
+        else //一行一行复制
+        {
+            for (int i = 0; i < frame->height; i++) //Y
+            {
+                memcpy(m_cache + i * frame->width, frame->data[0] + i * frame->linesize[0], frame->width);
+            }
+            for (int i = 0; i < frame->height / 2; i++) //UV
+            {
+                auto p = m_cache + frame->height * frame->width;//移位Y
+                memcpy(p+i*frame->width,frame->data[1] + i*frame->linesize[1],frame->width);
+            }
+        }
+        return draw(m_cache,frame->linesize[0]);
         break;
     case AV_PIX_FMT_ARGB:
     case AV_PIX_FMT_RGBA:

@@ -18,7 +18,7 @@ message($$QMAKE_POST_LINK)
 }
 SOURCES += \
     $$PWD/SDLRerderer.cpp \
-    $$PWD/VideoRerdererView.cpp \
+    $$PWD/VideoRerdererView.cpp
 
 HEADERS += \
     $$PWD/SDLRerderer.h \

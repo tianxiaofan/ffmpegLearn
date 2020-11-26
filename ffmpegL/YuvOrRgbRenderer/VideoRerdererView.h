@@ -46,6 +46,7 @@ public:
         YUV420P = 0,
         RGB24   = 2,
         BGR24   = 3,
+        NV12    = 23,
         ARGB    = 25,
         RGBA    = 26,
         ABGR    = 27,
@@ -57,6 +58,7 @@ public:
         SDL = 0
     };
 
+    virtual ~VideoRerdererView();
     static VideoRerdererView* create(RendererType type = SDL);
 
     /**
@@ -145,7 +147,8 @@ protected:
     void*     m_winId;
 
 private:
-    std::ifstream ifs;
-    AVFrame*      m_frame = nullptr;
+    std::ifstream  ifs;
+    AVFrame*       m_frame = nullptr;
+    unsigned char* m_cache = nullptr; //nv12的临时缓冲空间
 };
 

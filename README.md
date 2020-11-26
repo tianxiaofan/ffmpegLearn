@@ -51,3 +51,5 @@ https://edu.51cto.com/course/24960.html
 
 + encode: 封装编码器, encode线程安全,所有ffmpeg函数全部封装在其中,解决编码过程缓冲未取的问题, main文件为测试文件
 
++ Codec:重构Encodec,封装Decodec.添加硬解,添加硬解后直接在gpu渲染,直接在gpu渲染只支持dxva2
+

@@ -115,6 +115,9 @@ bool SDLRerderer::init(int width, int height, VideoRerdererView::PixFormat fmt)
     case VideoRerdererView::YUV420P:
         sdl_fmt = SDL_PIXELFORMAT_IYUV;
         break;
+    case VideoRerdererView::NV12:
+        sdl_fmt = SDL_PIXELFORMAT_NV12;
+        break;
     default:
         break;
         ;
