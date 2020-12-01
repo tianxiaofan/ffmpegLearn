@@ -9,16 +9,10 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Codec.cpp \
-    Decodec.cpp \
-    Encodec.cpp \
     main.cpp \
     MainWindow.cpp
 
 HEADERS += \
-    Codec.h \
-    Decodec.h \
-    Encodec.h \
     MainWindow.h
 
 FORMS += \
@@ -29,5 +23,4 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-#没有重新引入ffmpeg相关库,头文件,直接引用了YuvOrRgbRenderer/videoRenderer.pri
-include(../YuvOrRgbRenderer/videoRenderer.pri)
+include(./Codec.pri)

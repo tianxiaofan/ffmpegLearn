@@ -17,6 +17,8 @@ https://edu.51cto.com/course/24960.html
 
 ##### 子项目说明 由简到复杂按以下项目顺序
 
+​		注意看每个main.cpp,开头部分的宏,不同宏会启用不同功能
+
 + Logger:日志,后续项目大部分都有使用到
 
 + mergePicture: 合并图片,sdl渲染显示
@@ -51,5 +53,9 @@ https://edu.51cto.com/course/24960.html
 
 + encode: 封装编码器, encode线程安全,所有ffmpeg函数全部封装在其中,解决编码过程缓冲未取的问题, main文件为测试文件
 
++ testDecodec:测试解码,全部程序在main.cpp中,有添加硬解,启用宏即可
+
 + Codec:重构Encodec,封装Decodec.添加硬解,添加硬解后直接在gpu渲染,直接在gpu渲染只支持dxva2
+
++ testDemux: 测试解封装,main.cpp..包含两个宏,TEST_PLAY,TEST_REMUX,,,TEST_PLAY指解封装后,播放,TEST_REMUX是解封装后,再封装为mp4文件
 

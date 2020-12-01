@@ -134,7 +134,7 @@ int main(int argc, char* argv[])
                     break;
                 //获取解码数据,有可能多帧
 #ifndef ZERO_COPY
-                while (dec.recv(frame,false))
+                while (dec.recv(frame))
                 {
                     if (!initWin)
                     {
@@ -146,7 +146,7 @@ int main(int argc, char* argv[])
 
 #endif
 #ifdef ZERO_COPY
-                    while (dec.recv(frame,false))
+                    while (dec.recv(frame, false))
                     {
                         drawFrame(frame, ctx);
 #endif
