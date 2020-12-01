@@ -104,6 +104,8 @@ int main(int argc, char* argv[])
         }
     }
 
+    //视频解码
+
     int      video_count = 0;
     int      audio_count = 0;
     double   total_sec   = 0;

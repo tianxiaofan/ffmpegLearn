@@ -13,5 +13,6 @@ SUBDIRS += \
     testDecodec \
     testDemux \
     testEncode \
+    video \
     videoRenderer \
     avframe2renderer
