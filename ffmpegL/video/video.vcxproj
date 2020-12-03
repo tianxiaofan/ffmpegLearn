@@ -20,7 +20,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <PlatformToolset>v142</PlatformToolset>
-    <OutputDirectory>release\</OutputDirectory>
+    <OutputDirectory>..\bin\x86\release\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
     <CharacterSet>NotSet</CharacterSet>
     <ConfigurationType>Application</ConfigurationType>
@@ -29,7 +29,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <PlatformToolset>v142</PlatformToolset>
-    <OutputDirectory>debug\</OutputDirectory>
+    <OutputDirectory>..\bin\x86\debug\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
     <CharacterSet>NotSet</CharacterSet>
     <ConfigurationType>Application</ConfigurationType>
@@ -44,7 +44,7 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" /><ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')"><Import Project="$(QtMsBuild)\qt_defaults.props" /></ImportGroup><PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'"><OutDir>debug\</OutDir><IntDir>debug\</IntDir><TargetName>video</TargetName><IgnoreImportLibrary>true</IgnoreImportLibrary></PropertyGroup><PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'"><OutDir>release\</OutDir><IntDir>release\</IntDir><TargetName>video</TargetName><IgnoreImportLibrary>true</IgnoreImportLibrary><LinkIncremental>false</LinkIncremental></PropertyGroup><PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'"><QtInstall>msvc2019</QtInstall><QtModules>core;gui;widgets</QtModules></PropertyGroup><PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'"><QtInstall>msvc2019</QtInstall><QtModules>core;gui;widgets</QtModules></PropertyGroup><ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')"><Import Project="$(QtMsBuild)\qt.props" /></ImportGroup>
+  <PropertyGroup Label="UserMacros" /><ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')"><Import Project="$(QtMsBuild)\qt_defaults.props" /></ImportGroup><PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'"><OutDir>..\bin\x86\debug\</OutDir><IntDir>debug\</IntDir><TargetName>video</TargetName><IgnoreImportLibrary>true</IgnoreImportLibrary></PropertyGroup><PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'"><OutDir>..\bin\x86\release\</OutDir><IntDir>release\</IntDir><TargetName>video</TargetName><IgnoreImportLibrary>true</IgnoreImportLibrary><LinkIncremental>false</LinkIncremental></PropertyGroup><PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'"><QtInstall>msvc2019</QtInstall><QtModules>core;gui;widgets</QtModules></PropertyGroup><PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'"><QtInstall>msvc2019</QtInstall><QtModules>core;gui;widgets</QtModules></PropertyGroup><ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')"><Import Project="$(QtMsBuild)\qt.props" /></ImportGroup>
   
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -57,7 +57,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ObjectFileName>release\</ObjectFileName>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;VIDEO;LOGGER;NDEBUG;QT_NO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CONSOLE;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;VIDEO;LOGGER;NDEBUG;QT_NO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName></ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -66,8 +66,8 @@
       <WarningLevel>Level3</WarningLevel>
     <MultiProcessorCompilation>true</MultiProcessorCompilation></ClCompile>
     <Link>
-      <AdditionalDependencies>E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avcodec.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avdevice.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avfilter.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avformat.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avutil.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\postproc.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\SDL2.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\swresample.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\swscale.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86;C:\opensslx86\lib;C:\Utils\my_sql\mysql-5.7.25-win32\lib;C:\Utils\postgresqlx86\pgsql\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avcodec.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avdevice.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avfilter.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avformat.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avutil.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\postproc.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\SDL2.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\swresample.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\swscale.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -76,7 +76,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <OutputFile>$(OutDir)\video.exe</OutputFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Link>
     <Midl>
@@ -85,9 +85,9 @@
       <WarningLevel>0</WarningLevel>
     </Midl>
     <ResourceCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;VIDEO;LOGGER;NDEBUG;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CONSOLE;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;VIDEO;LOGGER;NDEBUG;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
-  <QtMoc><CompilerFlavor>msvc;msvc</CompilerFlavor><Include>./$(Configuration)/moc_predefs.h;./$(Configuration)/moc_predefs.h</Include><ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription><DynamicSource>output</DynamicSource><QtMocDir>$(Configuration)</QtMocDir><QtMocFileName>moc_%(Filename).cpp</QtMocFileName></QtMoc><QtUic><ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription><QtUicDir>$(ProjectDir)</QtUicDir><QtUicFileName>ui_%(Filename).h</QtUicFileName></QtUic></ItemDefinitionGroup>
+  <QtMoc><CompilerFlavor>msvc</CompilerFlavor><Include>./$(Configuration)/moc_predefs.h</Include><ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription><DynamicSource>output</DynamicSource><QtMocDir>$(Configuration)</QtMocDir><QtMocFileName>moc_%(Filename).cpp</QtMocFileName></QtMoc><QtUic><ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription><QtUicDir>$(ProjectDir)</QtUicDir><QtUicFileName>ui_%(Filename).h</QtUicFileName></QtUic></ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;..\include;..\Logger;debug;/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -99,7 +99,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <ObjectFileName>debug\</ObjectFileName>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;VIDEO;LOGGER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CONSOLE;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;VIDEO;LOGGER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -107,15 +107,15 @@
       <WarningLevel>Level3</WarningLevel>
     <MultiProcessorCompilation>true</MultiProcessorCompilation></ClCompile>
     <Link>
-      <AdditionalDependencies>E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avcodec.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avdevice.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avfilter.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avformat.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avutil.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\postproc.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\SDL2.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\swresample.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\swscale.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86;C:\opensslx86\lib;C:\Utils\my_sql\mysql-5.7.25-win32\lib;C:\Utils\postgresqlx86\pgsql\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avcodec.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avdevice.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avfilter.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avformat.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\avutil.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\postproc.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\SDL2.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\swresample.lib;E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86\swscale.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\ffmpeg\ffmpegLearn\ffmpegLearn\ffmpegL\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
       <OutputFile>$(OutDir)\video.exe</OutputFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Link>
     <Midl>
@@ -124,26 +124,33 @@
       <WarningLevel>0</WarningLevel>
     </Midl>
     <ResourceCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;VIDEO;LOGGER;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CONSOLE;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;VIDEO;LOGGER;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
-  <QtMoc><CompilerFlavor>msvc;msvc</CompilerFlavor><Include>./$(Configuration)/moc_predefs.h;./$(Configuration)/moc_predefs.h</Include><ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription><DynamicSource>output</DynamicSource><QtMocDir>$(Configuration)</QtMocDir><QtMocFileName>moc_%(Filename).cpp</QtMocFileName></QtMoc><QtUic><ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription><QtUicDir>$(ProjectDir)</QtUicDir><QtUicFileName>ui_%(Filename).h</QtUicFileName></QtUic></ItemDefinitionGroup>
+  <QtMoc><CompilerFlavor>msvc</CompilerFlavor><Include>./$(Configuration)/moc_predefs.h</Include><ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription><DynamicSource>output</DynamicSource><QtMocDir>$(Configuration)</QtMocDir><QtMocFileName>moc_%(Filename).cpp</QtMocFileName></QtMoc><QtUic><ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription><QtUicDir>$(ProjectDir)</QtUicDir><QtUicFileName>ui_%(Filename).h</QtUicFileName></QtUic></ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CTools.cpp" />
     <ClCompile Include="Codec.cpp" />
     <ClCompile Include="Decodec.cpp" />
+    <ClCompile Include="DecodecThread.cpp" />
     <ClCompile Include="Demux.cpp" />
+    <ClCompile Include="DemuxThread.cpp" />
     <ClCompile Include="Encodec.cpp" />
     <ClCompile Include="Format.cpp" />
     <ClCompile Include="..\Logger\Logger.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Muxing.cpp" />
+    <ClCompile Include="MuxingThread.cpp" />
     <ClCompile Include="SDLRerderer.cpp" />
     <ClCompile Include="VideoRerdererView.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CTools.h" />
     <ClInclude Include="Codec.h" />
     <ClInclude Include="Decodec.h" />
+    <ClInclude Include="DecodecThread.h" />
     <ClInclude Include="Demux.h" />
+    <ClInclude Include="DemuxThread.h" />
     <ClInclude Include="Encodec.h" />
     <ClInclude Include="Format.h" />
     <ClInclude Include="..\Logger\Logger.h" />
@@ -159,6 +166,7 @@
       
     </QtMoc>
     <ClInclude Include="Muxing.h" />
+    <ClInclude Include="MuxingThread.h" />
     <ClInclude Include="SDLRerderer.h" />
     <ClInclude Include="VideoRerdererView.h" />
   </ItemGroup>

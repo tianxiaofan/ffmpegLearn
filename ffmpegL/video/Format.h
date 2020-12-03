@@ -17,6 +17,7 @@
 #pragma once
 #include<mutex>
 
+#include "CTools.h"
 
 struct AVFormatContext;
 struct AVCodecContext;
@@ -61,10 +62,52 @@ public:
     bool copyParame(int stream_index, AVCodecContext* dst);
 
     /**
+     * @brief copyVideoPara 智能指针 返回复制的视频参数
+     * @return
+     */
+    std::shared_ptr<VAPara> copyVideoPara();
+    /**
+     * @brief copyAudioPara 返回音频参数
+     * @return
+     */
+    std::shared_ptr<VAPara> copyAudioPara();
+
+    /**
      * @brief rescaleTime 根据timebase计算pts
      * @return
      */
     bool rescaleTime(AVPacket* pkt, long long offset_pts,Rational time_base);
+    bool rescaleTime(AVPacket* pkt, long long offset_pts,AVRational* time_base);
+
+    /**
+     * @brief setTimeOutMs 设置超时时间
+     * @param ms
+     */
+    void setTimeoutMs(int ms);
+
+    /**
+     * @brief isTimeout 判断超时
+     * @return
+     */
+    bool isTimeout()
+    {
+        if (getNowMs() - m_last_time > m_timeout)
+        {
+            m_last_time = getNowMs();
+            m_isConnect = false;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * @brief isConnect 是否连接成功
+     * @return
+     */
+    bool isConnect() {return m_isConnect;}
 
 protected:
     AVFormatContext* m_c = nullptr; //封装或解封装上下文
@@ -74,7 +117,10 @@ protected:
     Rational         m_videoTimeBase = {1, 25};
     Rational         m_audioTimeBase = {1, 9000};
     int              m_videoCodecID  = 0;
-    int              m_width    = 0;
-    int              m_height   = 0;
+    int              m_width         = 0;
+    int              m_height        = 0;
+    int              m_timeout       = 0; //超时时间,ms
+    long long        m_last_time     = 0; //上次接收到数据的时间
+    bool             m_isConnect     = false; //是否连接成功
 };
 

@@ -22,6 +22,7 @@ extern "C"
 }
 #include "Logger.h"
 #include "Codec.h"
+#include "CTools.h"
 
 using namespace std;
 
@@ -33,12 +34,19 @@ Demux::Demux()
 AVFormatContext* Demux::open(const char* url)
 {
     AVFormatContext* c  = nullptr;
-    auto             re = avformat_open_input(&c, url, nullptr, nullptr);
+    AVDictionary*    opts = nullptr;
+    av_dict_set(&opts,"rtsp_transport","udp",0);
+    av_dict_set(&opts,"stimeout","1000000",0);//连接超时1s
+    auto re = avformat_open_input(&c, url, nullptr, &opts);
     if (re != 0)
     {
         LOG_WARN << printError(re).c_str();
         return nullptr;
     }
+
+    if(opts)
+        av_dict_free(&opts);
+
     re = avformat_find_stream_info(c, nullptr);
     if (re < 0)
     {
@@ -63,6 +71,9 @@ bool Demux::read(AVPacket* pkt)
         LOG_WARN << printError(re).c_str();
         return false;
     }
+    //刷新计时
+    m_last_time = getNowMs();
+
     return true;
 }
 

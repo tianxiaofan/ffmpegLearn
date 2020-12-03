@@ -1,4 +1,7 @@
 # C++ objects and libs
+**/.vs/
+**/debug/
+**/release/
 *.slo
 *.lo
 *.o
@@ -10,6 +13,7 @@
 *.dylib
 *.exe
 *.mp4
+
 
 # Qt-es
 object_script.*.Release

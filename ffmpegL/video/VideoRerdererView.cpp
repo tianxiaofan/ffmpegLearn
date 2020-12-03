@@ -23,22 +23,7 @@ extern "C"
 }
 #include "Logger.h"
 using namespace std;
-void customSleep(unsigned int m)
-{
-    auto begin = clock();
-    for (int i = 0; i < m; i++)
-    {
-        std::this_thread::sleep_for(1ms);
-        if ((clock() - begin) / (CLOCKS_PER_SEC / 1000) >= m)
-        {
-            break;
-        }
-    }
-}
-long long getNowMs()
-{
-    return clock() / (CLOCKS_PER_SEC / 1000);//兼容跨平台
-}
+
 
 VideoRerdererView::~VideoRerdererView()
 {
@@ -62,6 +47,23 @@ VideoRerdererView* VideoRerdererView::create(VideoRerdererView::RendererType typ
     return nullptr;
 }
 
+bool VideoRerdererView::init(AVCodecParameters* para)
+{
+    if (!para)
+        return false;
+    auto fmt = (PixFormat) para->format;
+    switch (para->format)
+    {
+    case AV_PIX_FMT_YUV420P:
+    case AV_PIX_FMT_YUVJ420P:
+        fmt = YUV420P;
+        break;
+    default:
+        break;
+    }
+    return init(para->width,para->height,fmt);
+}
+
 bool VideoRerdererView::drawAVFrame(AVFrame* frame)
 {
     if (!frame || !frame->data[0])
@@ -80,6 +82,7 @@ bool VideoRerdererView::drawAVFrame(AVFrame* frame)
         m_beginMs = clock();
     }
     switch (frame->format) {
+    case AV_PIX_FMT_YUVJ420P:
     case AV_PIX_FMT_YUV420P:
         return draw(frame->data[0],
                     frame->linesize[0],

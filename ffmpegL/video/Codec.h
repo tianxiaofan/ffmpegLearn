@@ -17,10 +17,8 @@
 #pragma once
 #include <mutex>
 #include <vector>
+#include "CTools.h"
 
-struct AVCodecContext;
-struct AVFrame;
-struct AVPacket;
 
 std::string printError(int err);
 
@@ -37,7 +35,7 @@ public:
      * @param codeId 编码器id,与ffmpeg相对应
      * @return  返回编码器上下文,失败返回nullptr
      */
-    static AVCodecContext* cteate(int codeId,bool isEncodec);
+    static AVCodecContext* create(int codeId,bool isEncodec);
 
     /**
      * @brief setContext 设置对象的编码器上下文,线程安全

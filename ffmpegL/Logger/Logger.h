@@ -1,9 +1,9 @@
 ﻿#pragma once
-#include <QDebug>
 #include <atomic>
 #include <chrono>
-#include <thread>
 #include <sstream>
+#include <thread>
+#include <QDebug>
 
 // from: https://github.com/jaredtao/TaoLogger
 namespace Logger
@@ -13,7 +13,6 @@ static atomic_int gCount(0);
 
 static QString currentThreadId()
 {
-
     stringstream ss;
     ss << this_thread::get_id();
     return QString::fromStdString(ss.str());
@@ -28,6 +27,9 @@ static QString currentThreadId()
 #define LOG_WARN_THREAD qWarning() << __FILE__ << __FUNCTION__ << __LINE__ << Logger::currentThreadId()
 #define LOG_CRIT_THREAD qCritical() << __FILE__ << __FUNCTION__ << __LINE__ << Logger::currentThreadId()
 
-void initLog(bool isFile = false, const QString& logPath = QStringLiteral("Log"), int logMaxCount = 1024, bool async = true);
+void initLog(bool           isFile      = false,
+             const QString& logPath     = QStringLiteral("Log"),
+             int            logMaxCount = 1024,
+             bool           async       = true);
 
 } // namespace Logger

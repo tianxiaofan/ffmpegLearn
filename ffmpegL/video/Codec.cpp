@@ -36,7 +36,7 @@ Codec::Codec()
 
 }
 
-AVCodecContext *Codec::cteate(int codeId, bool isEncodec)
+AVCodecContext *Codec::create(int codeId, bool isEncodec)
 {
     AVCodec* codec = nullptr;
     if(isEncodec)

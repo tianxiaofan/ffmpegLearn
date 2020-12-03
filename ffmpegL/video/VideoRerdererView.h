@@ -19,24 +19,12 @@
 #include <QMutex>
 #include <string>
 #include <fstream>
-
-/**
- * @brief customSleep 自定义的sleep
- * @param m
- */
-void customSleep(unsigned int m);
-
-/**
- * @brief getNowMs 获取当前毫秒级的时间戳
- * @return
- */
-long long getNowMs();
+#include "CTools.h"
 
 /**
  * @brief The VideoRerdererView class 视频渲染接口
  */
 
-struct AVFrame;
 class VideoRerdererView
 {
 public:
@@ -69,6 +57,7 @@ public:
      * @return 是否创建成功
      */
     virtual bool init(int width, int height, PixFormat fmt = RGBA) = 0;
+    virtual bool init(AVCodecParameters* para);
 
     /**
      * @brief draw 渲染图像,线程安全

@@ -44,7 +44,6 @@ HEADERS += \
     $$PWD/Demux.h \
     $$PWD/Encodec.h \
     $$PWD/Format.h \
-    $$PWD/MainWindow.h \
     $$PWD/Muxing.h \
     $$PWD/SDLRerderer.h \
     $$PWD/VideoRerdererView.h
@@ -56,3 +55,15 @@ DEPENDPATH += $$PWD
 include(../Logger/Logger.pri)
 
 }
+
+HEADERS += \
+    $$PWD/CTools.h \
+    $$PWD/DecodecThread.h \
+    $$PWD/DemuxThread.h \
+    $$PWD/MuxingThread.h
+
+SOURCES += \
+    $$PWD/CTools.cpp \
+    $$PWD/DecodecThread.cpp \
+    $$PWD/DemuxThread.cpp \
+    $$PWD/MuxingThread.cpp

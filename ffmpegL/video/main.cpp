@@ -31,6 +31,11 @@ using namespace std;
 #include <thread>
 #include "Demux.h"
 #include "Muxing.h"
+#include "CTools.h"
+#include "DemuxThread.h"
+#include "DecodecThread.h"
+#include "MuxingThread.h"
+#include "VideoRerdererView.h"
 
 #define CERR(err)                            \
     if (err != 0)                            \
@@ -39,14 +44,110 @@ using namespace std;
         return -1;                           \
     }
 
+#define VIDEO_TEST 0
+
+
+class testThread : public CThread
+{
+public:
+    virtual void threadRun() override
+    {
+        LOG_DEBUG << "test thread";
+        while (!m_isExit)
+        {
+            this_thread::sleep_for(1ms);
+        }
+        LOG_DEBUG << "test thread end";
+    }
+};
+
+string rtsp("rtsp://192.168.1.247/0");
+string localrtsp("rtsp://127.0.0.1:8554/test");
 
 int main(int argc, char* argv[])
 {
-    //    QApplication a(argc, argv);
-    //    MainWindow w;
-    //    w.show();
-    //    return a.exec();
-    //Logger::initLog();
+    //        QApplication a(argc, argv);
+    //        MainWindow w;
+    //        w.show();
+    //        return a.exec();
+
+    Logger::initLog();
+    DemuxThread demux;
+    while (1)
+    {
+        if (demux.open(localrtsp))
+            break;
+        customSleep(100);
+    }
+
+    AVCodecParameters* video_para     = nullptr;
+    AVCodecParameters* audio_para     = nullptr;
+    AVRational*        video_timebase = nullptr;
+    AVRational*        audio_timebase = nullptr;
+
+    auto vpara = demux.copyVideoPara();
+    if (vpara)
+    {
+        video_para     = vpara->para;
+        video_timebase = vpara->timeBase;
+    }
+    auto apara = demux.copyAudioPara();
+    if (apara)
+    {
+        audio_para     = apara->para;
+        audio_timebase = apara->timeBase;
+    }
+
+    MuxingThread remux;
+    if (!remux.open("rtsp_test.mp4", video_para, video_timebase, audio_para, audio_timebase))
+    {
+        LOG_DEBUG << "remux:error";
+    }
+    demux.setNext(&remux);
+    demux.start();
+    remux.start();
+    customSleep(20000);
+    remux.stop();
+
+    if (!remux.open("rtsp_test1.mp4", video_para, video_timebase, audio_para, audio_timebase))
+    {
+        LOG_DEBUG << "remux:error";
+    }
+    remux.start();
+    customSleep(20000);
+    remux.stop();
+    demux.stop();
+
+//    auto view = VideoRerdererView::create();
+//    view->init(vpara->para);
+
+//    DecodecThread decodec;
+//    if (!decodec.open(vpara->para))
+//    {
+//        LOG_WARN << "open error!";
+//    }
+//    else
+//    {
+//        demux.setNext(&decodec);
+//        demux.start();
+//        decodec.start();
+//    }
+//    while (1)
+//    {
+//        auto f = decodec.getFrame();
+//        if (!f)
+//        {
+//            customSleep(1);
+//            continue;
+//        }
+//        view->drawAVFrame(f->frame);
+//    }
+
+//    getchar();
+        return -1;
+
+
+#if VIDEO_TEST
     string url     = "f:/jqdz/mini.mp4";
     string out_url = "test.mp4";
 
@@ -207,4 +308,5 @@ int main(int argc, char* argv[])
     dec.setContext(nullptr);
 
     return -1;
+#endif
 }

@@ -37,13 +37,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CTools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Codec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Decodec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DecodecThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Demux.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DemuxThread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Encodec.cpp">
@@ -61,6 +70,9 @@
     <ClCompile Include="Muxing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MuxingThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="SDLRerderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -72,13 +84,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CTools.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Codec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Decodec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DecodecThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Demux.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DemuxThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Encodec.h">
@@ -97,6 +118,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <ClInclude Include="Muxing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MuxingThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SDLRerderer.h">

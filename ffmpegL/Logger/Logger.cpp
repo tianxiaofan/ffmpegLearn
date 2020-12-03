@@ -113,6 +113,8 @@ static void outputMessageAsyncConsole(QtMsgType type, const QMessageLogContext& 
 {
     Q_UNUSED(context);
     Q_UNUSED(msg);
+    static QMutex mutex;
+    QMutexLocker lock(&mutex);
     static const QStringList typeString = {"Debug", "Warning", "Critical", "Fatal", "Info", "System"};
     QDateTime                dt         = QDateTime::currentDateTime();
     //每小时一个文件
@@ -130,9 +132,9 @@ static void outputMessageAsyncConsole(QtMsgType type, const QMessageLogContext& 
 }
 static void outputMessage(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
+    static QMutex mutex;
     static const QString messageTemp = QString("<div class=\"%1\">%2</div>\r\n");
     static const char typeList[] = { 'd', 'w', 'c', 'f', 'i' };
-    static QMutex mutex;
 
     Q_UNUSED(context);
     QDateTime dt = QDateTime::currentDateTime();

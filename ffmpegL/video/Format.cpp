@@ -24,6 +24,14 @@ extern "C"
 
 using namespace std;
 
+static int TimeoutCallback(void* para)
+{
+    auto format = (Format*) para;
+    if(format->isTimeout())
+        return 1; //退出read_frame
+    return 0; //正常阻塞
+}
+
 Format::Format()
 {
 
@@ -52,8 +60,22 @@ void Format::setContext(AVFormatContext* c)
     }
     m_c = c;
 
-    if(!m_c)
+    if (!m_c)
+    {
+        m_isConnect = false;
         return;
+    }
+    m_isConnect = true;
+
+    //计时用于超时判断
+    m_last_time = getNowMs();
+
+    //设置超时回调函数
+    if (m_timeout > 0)
+    {
+        AVIOInterruptCB callback = {TimeoutCallback, this};
+        m_c->interrupt_callback  = callback;
+    }
 
     //区分音视频
     m_audioIndex = -1;
@@ -94,15 +116,15 @@ bool Format::copyParame(int stream_index, AVCodecParameters* dst)
     return true;
 }
 
-bool Format::copyParame(int stream_index, AVCodecContext *dst)
+bool Format::copyParame(int stream_index, AVCodecContext* dst)
 {
-    if(!dst)
+    if (!dst)
         return false;
 
     unique_lock<mutex> lock(m_mutex);
     if (!m_c)
         return false;
-    if (stream_index < 0 || stream_index >= m_c->nb_streams )
+    if (stream_index < 0 || stream_index >= m_c->nb_streams)
         return false;
 
     auto re = avcodec_parameters_to_context(dst, m_c->streams[stream_index]->codecpar);
@@ -113,26 +135,76 @@ bool Format::copyParame(int stream_index, AVCodecContext *dst)
     return true;
 }
 
+std::shared_ptr<VAPara> Format::copyVideoPara()
+{
+    int                index = videoIndex();
+    shared_ptr<VAPara> re;
+    unique_lock<mutex> lock(m_mutex);
+    if (index < 0 || !m_c)
+        return re;
+    re.reset(VAPara::create());
+    *re->timeBase = m_c->streams[index]->time_base;
+    avcodec_parameters_copy(re->para,m_c->streams[index]->codecpar);
+
+    return re;
+}
+
+std::shared_ptr<VAPara> Format::copyAudioPara()
+{
+    int                index = audioIndex();
+    shared_ptr<VAPara> re;
+    unique_lock<mutex> lock(m_mutex);
+    if (index < 0 || !m_c)
+        return re;
+    re.reset(VAPara::create());
+    *re->timeBase = m_c->streams[index]->time_base;
+    avcodec_parameters_copy(re->para,m_c->streams[index]->codecpar);
+
+    return re;
+}
+
 bool Format::rescaleTime(AVPacket* pkt, long long offset_pts, Rational time_base)
 {
     if (!pkt)
+        return false;
+
+    AVRational in_time_base{time_base.num, time_base.den};
+    return rescaleTime(pkt,offset_pts,&in_time_base);
+}
+
+bool Format::rescaleTime(AVPacket *pkt, long long offset_pts, AVRational *time_base)
+{
+    if (!pkt || !time_base)
         return false;
 
     unique_lock<mutex> lock(m_mutex);
     if (!m_c)
         return false;
     auto       out_stream = m_c->streams[pkt->stream_index];
-    AVRational in_time_base{time_base.num, time_base.den};
     pkt->pts      = av_rescale_q_rnd(pkt->pts - offset_pts,
-                                in_time_base,
+                                *time_base,
                                 out_stream->time_base,
                                 (AVRounding)(AV_ROUND_INF | AV_ROUND_PASS_MINMAX));
     pkt->dts      = av_rescale_q_rnd(pkt->dts - offset_pts,
-                                in_time_base,
+                                *time_base,
                                 out_stream->time_base,
                                 (AVRounding)(AV_ROUND_INF | AV_ROUND_PASS_MINMAX));
-    pkt->duration = av_rescale_q(pkt->duration, in_time_base, out_stream->time_base);
+    pkt->duration = av_rescale_q(pkt->duration, *time_base, out_stream->time_base);
     pkt->pos      = -1;
     return true;
+}
+
+
+void Format::setTimeoutMs(int ms)
+{
+    unique_lock<mutex> lock(m_mutex);
+    m_timeout = ms;
+
+    //设置回调函数,处理超时退出
+    if (m_c)
+    {
+        AVIOInterruptCB callback = {TimeoutCallback, this};
+        m_c->interrupt_callback = callback;
+    }
 }
 
