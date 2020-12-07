@@ -57,7 +57,7 @@ void VideoRecord::run()
         {
             break;
         }
-        msleep(10);
+        msleep(3000);
         continue;
     }
 
@@ -84,7 +84,7 @@ void VideoRecord::run()
     auto cur = getNowMs();
     while (!isInterruptionRequested())
     {
-        if (getNowMs() - cur > file_sec * 1000)
+        if (getNowMs() - cur > m_file_sec * 1000)
         {
             cur = getNowMs();
             remux.stop(); //停止封装

@@ -49,6 +49,9 @@ void DemuxThread::threadRun()
         printf("+");
         this_thread::sleep_for(1ms);
     }
+
+    //停止线程前,清空录像上下文
+    m_demux.setContext(nullptr);
 }
 
 bool DemuxThread::open(string url,std::vector<DictionaryOpt> d, int timeout)

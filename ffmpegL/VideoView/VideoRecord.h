@@ -28,12 +28,13 @@ public:
 
     void setRtspUrl(const QString& url) { m_rtspUrl = url; }
     void setSavePath(const QString& path) { m_savePath = path; }
+    void setFileTime(const int sec){m_file_sec = sec;}
 
     void run() override;
 
 private:
     QString m_rtspUrl;
     QString m_savePath;
-    int     file_sec = 20;
+    int     m_file_sec = 20;
 };
 

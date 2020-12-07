@@ -20,6 +20,7 @@
 
 #include <QMessageBox>
 #include <QMouseEvent>
+#include <QDir>
 #include "VVConfig.h"
 #include "Add.h"
 #include "VVTools.h"
@@ -49,8 +50,9 @@ VideoView::VideoView(QWidget *parent)
         m_hLayout = new QHBoxLayout();
         m_hLayout->setContentsMargins(0, 0, 0, 0);
         m_hLayout->setSpacing(0);
-        m_hLayout->addWidget(ui->left_widget);
-        m_hLayout->addWidget(ui->cames_widget);
+        m_hLayout->addWidget(ui->left_widget);//流列表
+        m_hLayout->addWidget(ui->cames_widget);//预览窗口
+        m_hLayout->addWidget(ui->playback_widget); //回放窗口
         ui->body_widget->setLayout(m_hLayout);
     }
 
@@ -67,6 +69,10 @@ VideoView::VideoView(QWidget *parent)
     connect(action, &QAction::triggered, this, &VideoView::onView9);
     action = m->addAction(C_STR("16窗口"));
     connect(action, &QAction::triggered, this, &VideoView::onView16);
+    auto start_rec = m_leftMenu.addAction(C_STR("全部开始录制"));
+    connect(start_rec, &QAction::triggered, this, &VideoView::startRecord);
+    auto stop_rec = m_leftMenu.addAction(C_STR("全部停止录制"));
+    connect(stop_rec, &QAction::triggered, this, &VideoView::stopRecord);
 
     //显示列表
     refresConfig();
@@ -75,6 +81,9 @@ VideoView::VideoView(QWidget *parent)
 
     //启动定时器渲染视频
     startTimer(1);
+
+    //默认显示预览
+    on_btnView_clicked();
 }
 
 VideoView::~VideoView()
@@ -218,6 +227,43 @@ void VideoView::onView(int count)
     }
 }
 
+void VideoView::startRecord()
+{
+    //容错功能,开始前先清理
+    stopRecord();
+    ui->label_state->setText(C_STR("录制中..."));
+    auto count = VVConfig::get()->getSize();
+    for (int i = 0; i < count; ++i)
+    {
+        auto v    = VVConfig::get()->getData(i);
+        auto path = QString(v.save_path + "/%1/").arg(i);
+        QDir dir;
+        dir.mkpath(path);
+        VideoRecord* rec = new VideoRecord();
+        rec->setRtspUrl(v.url);
+        rec->setSavePath(path);
+        rec->setFileTime(10);
+        rec->start();
+        m_rec.append(rec);
+    }
+}
+
+void VideoView::stopRecord()
+{
+    ui->label_state->setText(C_STR("监控中..."));
+    for (auto rec : m_rec)
+    {
+        if (rec->isRunning())
+        {
+            rec->requestInterruption();
+            rec->quit();
+            rec->wait();
+        }
+        delete rec;
+    }
+    m_rec.clear();
+}
+
 void VideoView::on_btnAdd_clicked()
 {
     Add add(ui->left_widget);
@@ -254,4 +300,16 @@ void VideoView::on_btnDelete_clicked()
     {
         refresConfig();
     }
+}
+
+void VideoView::on_btnView_clicked()
+{
+    ui->cames_widget->show();
+    ui->playback_widget->setHidden(true);
+}
+
+void VideoView::on_btnPlay_clicked()
+{
+    ui->cames_widget->setHidden(true);
+    ui->playback_widget->show();
 }

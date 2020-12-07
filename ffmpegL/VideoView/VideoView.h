@@ -21,6 +21,7 @@
 #include <QWidget>
 #include <QVector>
 #include "VideoWidget.h"
+#include "VideoRecord.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class VideoView; }
@@ -55,11 +56,20 @@ private slots:
     void onView16();
     void onView(int count);
 
+    //开始全部流录像
+    void startRecord();
+    //停止全部流录像
+    void stopRecord();
+
     void on_btnAdd_clicked();
 
     void on_btnEdit_clicked();
 
     void on_btnDelete_clicked();
+
+    void on_btnView_clicked();
+
+    void on_btnPlay_clicked();
 
 private:
     Ui::VideoView *ui;
@@ -68,6 +78,7 @@ private:
     QMenu           m_leftMenu;
     QVBoxLayout*    m_vLayout = nullptr;
     QHBoxLayout*    m_hLayout = nullptr;
-    QList<VideoWidget*> m_views;
+    QList<VideoWidget*>   m_views;
+    QVector<VideoRecord*> m_rec; //也可用链表
     int             m_list_max;
 };

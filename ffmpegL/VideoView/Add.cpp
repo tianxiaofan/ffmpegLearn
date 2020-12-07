@@ -19,6 +19,7 @@
 #include "VVConfig.h"
 #include <QMessageBox>
 #include "VVTools.h"
+#include "Logger.h"
 
 Add::Add(QWidget *parent) :
     QDialog(parent),
@@ -51,6 +52,7 @@ void Add::updataData(int index)
 
 void Add::on_btnSave_clicked()
 {
+        LOG_DEBUG << m_index;
     if (save(ui->lineEditName->text(), ui->lineEditUrl->text(), ui->lineEditSubUrl->text(), ui->lineEditSaveFile->text()))
     {
         emit saveSuccess();
@@ -63,7 +65,7 @@ void Add::on_btnSave_clicked()
 }
 
 
-bool Add::save(const QString &name, const QString &url, const QString &sub_url, const QString &save)
+bool Add::save(const QString& name, const QString& url, const QString& sub_url, const QString& save)
 {
     if (name.isEmpty())
     {
@@ -87,8 +89,9 @@ bool Add::save(const QString &name, const QString &url, const QString &sub_url, 
     }
 
     VVData data{name, url, sub_url, save};
-    if(m_index > 0)
+    if (m_index >= 0)
     {
+        LOG_DEBUG << m_index;
         return VVConfig::get()->updata(m_index,data);
     }
     else {
