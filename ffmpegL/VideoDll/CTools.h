@@ -15,6 +15,7 @@
 *
 ***************************************************************************/
 #pragma once
+#include "VideoDll_global.h"
 #include <thread>
 #include <mutex>
 #include <list>
@@ -24,20 +25,28 @@ struct AVFrame;
 struct AVPacket;
 struct AVCodecParameters;
 struct AVRational;
+struct AVFormatContext;
+
+struct VIDEODLL_EXPORT Rational{
+    int num; ///< Numerator
+    int den; ///< Denominator
+};
+
+VIDEODLL_EXPORT std::string printError(int err);
 
 /**
  * @brief customSleep 自定义的sleep
  * @param m
  */
-void customSleep(unsigned int m);
+VIDEODLL_EXPORT void customSleep(unsigned int m);
 
 /**
  * @brief getNowMs 获取当前毫秒级的时间戳
  * @return
  */
-long long getNowMs();
+VIDEODLL_EXPORT long long getNowMs();
 
-class  CThread
+class VIDEODLL_EXPORT CThread
 {
 public:
     /**
@@ -95,7 +104,7 @@ private:
 /**
  * @brief The VAPara class 音视频参数
  */
-class VAPara
+class VIDEODLL_EXPORT VAPara
 {
 public:
     ~VAPara();
@@ -114,7 +123,7 @@ private:
 /**
  * @brief The PtrAVFrame class 用于智能指针托管AVFrame
  */
-class PtrAVFrame
+class VIDEODLL_EXPORT PtrAVFrame
 {
 public:
     ~PtrAVFrame();
@@ -128,7 +137,7 @@ private:
  * @brief The AVPktList class 线程安全的packet list
  * 注意:在ffmpeg内部有AVPacketList,它是c链表,这里是自定义的
  */
-class AVPktList
+class VIDEODLL_EXPORT AVPktList
 {
 public:
     AVPacket* pop();

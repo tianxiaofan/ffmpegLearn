@@ -2,6 +2,9 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     Codec \
+    VideoDll \
+    VideoDllTest \
+    VideoView \
     encode \
     YuvOrRgbRenderer \
     mergePicture \

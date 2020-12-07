@@ -61,4 +61,6 @@ https://edu.51cto.com/course/24960.html
 
 + muxing:测试10s封装
 + video:这里开始重构代码,前面所有工程中所用的代码,全部复制到此工程,做成pri文件,后续工程都会基于此更改..此项目在muxing的测试基础上添加解码,编码,main测试代码请git checkout 至 ``8c171b15869655b3486863505a73f0d035d6adda``..后续main.cpp会覆盖
+  
   + video.pri :后续项目会用到此文件,里面封装了部分代码,实现了解封装,解码,编码,封装,SDL显示
+  + video:完成
