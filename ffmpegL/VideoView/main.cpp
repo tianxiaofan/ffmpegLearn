@@ -23,6 +23,9 @@
 #include "VideoRecord.h"
 
 const QString save_path = "./video";
+
+#define ENABLE_REMUX 0
+
 int main(int argc, char *argv[])
 {
 
@@ -31,6 +34,8 @@ int main(int argc, char *argv[])
     VideoView w;
     w.show();
 
+#if ENABLE_REMUX
+    // 重封装测试
     QDir               dir;
     dir.mkpath(save_path);
 
@@ -38,6 +43,7 @@ int main(int argc, char *argv[])
     record.setRtspUrl("rtsp://192.168.1.247/0");
     record.setSavePath(save_path);
     record.start();
+#endif
 
     return a.exec();
 }
