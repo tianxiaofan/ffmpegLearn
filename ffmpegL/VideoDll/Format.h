@@ -1,4 +1,4 @@
-/**************************************************************************
+﻿/**************************************************************************
 *   文件名      ：Format.h
 *   =======================================================================
 *   创 建 者    ：田小帆
@@ -69,6 +69,10 @@ public:
      */
     bool rescaleTime(AVPacket* pkt, long long offset_pts,Rational time_base);
     bool rescaleTime(AVPacket* pkt, long long offset_pts,AVRational* time_base);
+    /**
+     * @brief rescaleToMs 将pts或dts转换为毫秒
+     */
+    long long rescaleToMs(long long pts,int index);
 
     /**
      * @brief setTimeOutMs 设置超时时间

@@ -44,6 +44,13 @@ void DemuxThread::threadRun()
             this_thread::sleep_for(1ms);
             continue;
         }
+        if (m_synType == SYN_VIDEO && pkt.stream_index == m_demux.videoIndex())
+        {
+            auto dur = m_demux.rescaleToMs(pkt.duration, pkt.stream_index);
+            if (dur <= 0)
+                dur = 40;
+            customSleep(dur);
+        }
         next(&pkt);
         av_packet_unref(&pkt);
         printf("+");

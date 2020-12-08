@@ -1,4 +1,4 @@
-/**************************************************************************
+﻿/**************************************************************************
 *   文件名      ：Codec.cpp
 *   =======================================================================
 *   创 建 者    ：田小帆
@@ -104,7 +104,7 @@ bool Codec::open()
     std::unique_lock<std::mutex> lock(m_mutex);
     if (!m_ctx)
         return false;
-    auto re = avcodec_open2(m_ctx, nullptr, nullptr);
+    auto re = avcodec_open2(m_ctx, m_ctx->codec, nullptr);
     if (re != 0)
     {
         LOG_WARN << "avcodec_open2: " << printError(re).c_str();

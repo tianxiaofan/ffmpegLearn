@@ -21,11 +21,23 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QDir>
+#include <QDateTime>
+#include <QMap>
 #include "VVConfig.h"
 #include "Add.h"
 #include "VVTools.h"
+#include "Logger.h"
+#include "VideoPlayer.h"
 
 
+struct VideoProperty
+{
+    QString   filePath;
+    QDateTime fileTime;
+};
+
+//存储视频的日期
+static QMap<QDate, QVector<VideoProperty>> videoFiles;
 
 VideoView::VideoView(QWidget *parent)
     : QWidget(parent)
@@ -312,4 +324,72 @@ void VideoView::on_btnPlay_clicked()
 {
     ui->cames_widget->setHidden(true);
     ui->playback_widget->show();
+}
+
+// 视频流选中的点击
+void VideoView::on_videoList_clicked(const QModelIndex& index)
+{
+    auto v = VVConfig::get()->getData(index.row());
+    if (v.name.isEmpty())
+        return;
+
+    //获取相机路径
+    auto path = QString(v.save_path + "/%1/").arg(index.row());
+
+    //遍历此目录
+    QDir dir(path);
+    if (!dir.exists())
+        return;
+    //获取文件列表
+    QStringList filters = {"*.mp4", "*.avi"};
+    dir.setNameFilters(filters);
+    auto files = dir.entryInfoList();
+    //清空日历
+    ui->calendarWidget->clearDate();
+    //清空map
+    videoFiles.clear();
+
+    for (auto file : files)
+    {
+        //file: .\video\0\video_2020_12_07_11_46_59.mp4
+        auto filename = file.baseName(); //filename: video_2020_12_07_11_46_59
+        filename      = filename.remove(0, filename.indexOf('_') + 1); //filename:2020_12_07_11_46_59
+        auto dt       = QDateTime::fromString(filename, "yyyy_MM_dd_hh_mm_ss");
+        ui->calendarWidget->addDate(dt.date());
+
+        //记录存储到map,供日历使用
+        VideoProperty vp;
+        vp.filePath = file.absoluteFilePath();
+        vp.fileTime = dt;
+        videoFiles[dt.date()].push_back(vp);
+    }
+    ui->calendarWidget->updateC();
+}
+
+//选择日期
+void VideoView::on_calendarWidget_clicked(const QDate& date)
+{
+    LOG_INFO << date;
+    auto vp = videoFiles.value(date);
+    ui->listWidget_time->clear();
+    for (auto v : vp)
+    {
+        auto item = new QListWidgetItem(v.fileTime.time().toString());
+        item->setData(Qt::UserRole, v.filePath); //存储用户数据到item中
+        ui->listWidget_time->addItem(item);
+    }
+}
+
+
+void VideoView::on_listWidget_time_activated(const QModelIndex& index)
+{
+    auto item = ui->listWidget_time->item(index.row());
+    if (!item)
+        return;
+
+    auto               path = item->data(Qt::UserRole).toString();
+    path = "f:/jqdz/binghe.mp4";
+    static VideoPlayer player;
+    player.open(path);
+    player.show();
 }

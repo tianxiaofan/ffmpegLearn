@@ -18,6 +18,12 @@
 #include "CTools.h"
 #include "Demux.h"
 
+enum SYN_TYPE
+{
+    SYN_NONE  = 0, //不同步
+    SYN_VIDEO = 1 //根据视频同步
+};
+
 class VIDEODLL_EXPORT DemuxThread : public CThread
 {
 public:
@@ -34,11 +40,13 @@ public:
 
     std::shared_ptr<VAPara> copyVideoPara() { return m_demux.copyVideoPara(); }
     std::shared_ptr<VAPara> copyAudioPara() { return m_demux.copyAudioPara(); }
+    void                    setSynType(SYN_TYPE type) { m_synType = type; }
 
 private:
     Demux                      m_demux;
     std::string                m_url;
     int                        m_timeout = 0;
     std::vector<DictionaryOpt> m_dic;
+    SYN_TYPE                   m_synType;
 };
 

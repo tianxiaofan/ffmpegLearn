@@ -60,7 +60,7 @@ https://edu.51cto.com/course/24960.html
 + testDemux: 测试解封装,main.cpp..包含两个宏,TEST_PLAY,TEST_REMUX,,,TEST_PLAY指解封装后,播放,TEST_REMUX是解封装后,再封装为mp4文件
 
 + muxing:测试10s封装
-+ video:这里开始重构代码,前面所有工程中所用的代码,全部复制到此工程,做成pri文件,后续工程都会基于此更改..此项目在muxing的测试基础上添加解码,编码,main测试代码请git checkout 至 ``8c171b15869655b3486863505a73f0d035d6adda``..后续main.cpp会覆盖
++ video:这里开始重构代码,前面所有工程中所用的代码,全部复制到此工程,做成pri文件,后续工程都会基于此更改..此项目在muxing的测试基础上添加解码,编码,main测试代码请git checkout 至 ``8c171b15``..后续main.cpp会覆盖
   
   + video.pri :后续项目会用到此文件,里面封装了部分代码,实现了解封装,解码,编码,封装,SDL显示
   + video:完成一部分界面设计 ,需要用到时可 checkout 至 ``0c7f470b07``
@@ -68,5 +68,5 @@ https://edu.51cto.com/course/24960.html
     + 类名VVConfig为全局单例,线程安全.....
     + 拖动流名称到播放窗口即可完成播放,,因第一次解封装的启动仍然在ui线程,所以打开时会卡一下..
     + 在main中有一个测试封装的代码,可使用 ``ENABLE_REMUX`` 来控制是否启用
-  + video:在界面上添加一键录制和一键停止录制,会录制列表中所有的流
+  + video:在界面上添加一键录制和一键停止录制,会录制列表中所有的流 ,``[main d523f21]``
 

@@ -1,4 +1,4 @@
-/**************************************************************************
+﻿/**************************************************************************
 *   文件名      ：Format.cpp
 *   =======================================================================
 *   创 建 者    ：田小帆
@@ -192,6 +192,16 @@ bool Format::rescaleTime(AVPacket *pkt, long long offset_pts, AVRational *time_b
     pkt->duration = av_rescale_q(pkt->duration, *time_base, out_stream->time_base);
     pkt->pos      = -1;
     return true;
+}
+
+long long Format::rescaleToMs(long long pts, int index)
+{
+    unique_lock<mutex> lock(m_mutex);
+    if (!m_c || index < 0 || index >= m_c->nb_streams)
+        return -0;
+    auto       in_timebase  = m_c->streams[index]->time_base;
+    AVRational out_timebase = {1,1000}; //输出timebase
+    return av_rescale_q(pts, in_timebase, out_timebase);
 }
 
 

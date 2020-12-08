@@ -71,6 +71,12 @@ private slots:
 
     void on_btnPlay_clicked();
 
+    void on_videoList_clicked(const QModelIndex &index);
+
+    void on_calendarWidget_clicked(const QDate &date);
+
+    void on_listWidget_time_activated(const QModelIndex &index);
+
 private:
     Ui::VideoView *ui;
     bool            m_mouseIsPress = false;

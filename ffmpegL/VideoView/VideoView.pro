@@ -10,8 +10,10 @@ CONFIG += c++11 console
 
 SOURCES += \
     Add.cpp \
+    CustomCalender.cpp \
     VVConfig.cpp \
     VVTools.cpp \
+    VideoPlayer.cpp \
     VideoRecord.cpp \
     VideoWidget.cpp \
     main.cpp \
@@ -19,14 +21,17 @@ SOURCES += \
 
 HEADERS += \
     Add.h \
+    CustomCalender.h \
     VVConfig.h \
     VVTools.h \
+    VideoPlayer.h \
     VideoRecord.h \
     VideoView.h \
     VideoWidget.h
 
 FORMS += \
     Add.ui \
+    VideoPlayer.ui \
     VideoView.ui
 
 # Default rules for deployment.
